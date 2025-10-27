@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>更换图标示例</title>
+    <!-- 以下是网站图标的设置 -->
+    <!-- 1. 基础favicon.ico图标 -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- 2. 不同尺寸的PNG图标 -->
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <!-- 3. Apple Touch Icon（iOS设备用） -->
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <!-- 4. 网站应用图标（PWA） -->
+    <link rel="manifest" href="site.webmanifest">
+    <!-- 5. Microsoft Tile图标 -->
+    <meta name="msapplication-TileImage" content="mstile-150x150.png">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+</head>
+<body>
+    <h1>如何更换HTML网站图标</h1>
+    <p>要更换网站图标，请按照以下步骤操作：</p>
+    <ol>
+        <li>准备不同尺寸的图标文件（推荐使用SVG或PNG格式）</li>
+        <li>将图标文件放在网站根目录或指定文件夹中</li>
+        <li>在HTML的head部分添加相应的link标签</li>
+    </ol>
+    <p>注意：如果没有favicon.ico文件，浏览器会自动请求该文件，可能导致404错误。</p>
+    <p>你可以使用在线工具生成各种尺寸的图标，例如 <a href="https://favicon.io/" target="_blank">favicon.io</a></p>
+</body>
+</html>

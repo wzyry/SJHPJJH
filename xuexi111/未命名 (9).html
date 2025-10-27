@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>世界和平基金会 | 区块链赋能和平</title>
+    <style>
+        /* 基础         样式部分保持不变，省略重复代码
+         （实际使用时需保留完整样式内容）
+        */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+        }
+        
+        :root {
+            --primary-blue: #165DFF;
+            --dark-blue: #0E42D2;
+            --light-blue: #E8F3FF;
+            --blockchain-gray: #1E293B;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+        }
+        
+        body {
+            background-color: #ffffff;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 导航栏 - 蓝色系 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(22, 93, 255, 0.95);
+            backdrop-filter: blur(12px);
+            z-index: 100;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            background-color: var(--primary-blue);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 75px;
+        }
+        
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>') no-repeat center;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 35px;
+        }
+        
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-links a:hover {
+            color: white;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: white;
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: white;
+        }
+        
+        /* Banner轮播 - 区块链风格 */
+        .banner {
+            margin-top: 75px;
+            height: calc(100vh - 75px);
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f8fafc 0%, var(--light-blue) 100%);
+        }
+        
+        .slides {
+            display: flex;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        .slide-img {
+            width: 100%;
+            max-width: 1000px;
+            height: 55vh;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            background-color: white;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+        
+        .slide-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 8s ease;
+        }
+        
+        .slide-img:hover img {
+            transform: scale(1.05);
+        }
+        
+        .slide h1 {
+            font-size: 3.2rem;
+            margin-bottom: 25px;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--primary-blue), var(--dark-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .slide h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 10%;
+            width: 80%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), transparent);
+            border-radius: 2px;
+        }
+        
+        .slide p {
+            font-size: 1.3rem;
+            max-width: 750px;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+        
+        .slide-controls {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            width: 100%;
+            padding: 0 20px;
+        }
+        
+        /* 重新设计的轮播按钮 */
+        .slide-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+            background-color: rgba(22, 93, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            flex-shrink: 0;
+            transform: rotate(45deg);
+        }
+        
+        .slide-dot::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            width: 24px;
+            height: 24px;
+            border-radius: 5px;
+            background-color: rgba(22, 93, 255, 0.1);
+            opacity: 0;
+            transition: all 0.4s;
+        }
+        
+        .slide-dot.active {
+            background-color: var(--primary-blue);
+            transform: scale(1.2) rotate(45deg);
+            box-shadow: 0 0 0 4px rgba(22, 93, 255, 0.2);
+        }
+        
+        .slide-dot:hover::before {
+            opacity: 1;
+        }
+        
+        /* 关于我们 - 区块链元素 */
+        .about {
+            padding: 140px 0;
+            background-color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .about::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="%23E8F3FF" d="M47.5,-65.9C61.6,-59.5,74.5,-49.9,81.4,-36.5C88.4,-23.1,89.3,-6.9,85.9,7.6C82.5,22.1,74.8,35.6,64.2,46.3C53.6,57,39.9,64.9,25.3,70.5C10.7,76.1,-5.1,79.4,-20.5,75.7C-35.9,72,-51,61.3,-61.6,47.9C-72.2,34.5,-78.2,18.3,-80.5,1.8C-82.8,-14.7,-81.5,-30.7,-72.3,-42.8C-63.1,-54.9,-46,-63.1,-30.1,-68.1C-14.2,-73.1,1.5,-74.9,16.1,-74.2C30.7,-73.5,44.3,-70.3,55.7,-62.2C67.1,-54.1,76.3,-41.1,81.1,-27.3C85.9,-13.5,86.3,1.1,83.2,14.9C80.1,28.7,73.5,41.7,63.2,51.1C52.9,60.5,38.9,66.3,24.1,69.9C9.3,73.5,-6.6,74.9,-21.9,72.6C-37.2,69.3,-51.8,63.2,-62.2,52.2C-72.6,41.2,-78.9,25.3,-81.8,9.1C-84.7,-7.1,-84.2,-23.7,-76.3,-36.8C-68.4,-49.9,-53.1,-59.5,-38.1,-66.2C-23.1,-72.9,-8.7,-76.7,4.7,-79.2C18.1,-81.7,36.1,-82.9,47.5,-65.9Z" transform="translate(100 100)" /></svg>') no-repeat right top;
+            opacity: 0.8;
+            z-index: 0;
+        }
+        
+        .section-title {
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 80px;
+            font-weight: 800;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--dark-blue));
+            border-radius: 3px;
+        }
+        
+        .about-content {
+            display: flex;
+            gap: 80px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h3 {
+            font-size: 2rem;
+            margin-bottom: 35px;
+            color: var(--blockchain-gray);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .about-text h3::before {
+            content: '';
+            width: 40px;
+            height: 40px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23165DFF"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>') no-repeat center;
+        }
+        
+        .about-text p {
+            font-size: 1.15rem;
+            margin-bottom: 25px;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+        
+        .blockchain-tag {
+            display: inline-block;
+            background-color: var(--light-blue);
+            color: var(--primary-blue);
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .about-img {
+            flex: 1;
+            height: 500px;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(22, 93, 255, 0.1);
+        }
+        
+        .about-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 8s ease;
+        }
+        
+        .about-img:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* 核心价值 - 移除图标 */
+        .values {
+            padding: 140px 0;
+            background-color: #f8fafc;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px;
+        }
+        
+        .value-card {
+            padding: 50px 35px;
+            background-color: white;
+            text-align: center;
+            border-radius: 16px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(22, 93, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .value-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--dark-blue));
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+        
+        .value-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+        
+        .value-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .value-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--blockchain-gray);
+            font-weight: 700;
+        }
+        
+        .value-card p {
+            color: var(--text-light);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        
+        /* 仁义议程模块 */
+        .charity-agenda {
+            padding: 140px 0;
+            background-color: white;
+        }
+        
+        .agenda-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 40px;
+        }
+        
+        .agenda-item {
+            background-color: #f8fafc;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(22, 93, 255, 0.05);
+        }
+        
+        .agenda-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: var(--blockchain-gray);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .agenda-item h3::before {
+            content: '';
+            width: 30px;
+            height: 30px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23165DFF"><path d="M21 7L9 19L3.5 13.5 4.91 12.09L9 16.17L19.59 5.59L21 7Z"/></svg>') no-repeat center;
+        }
+        
+        .agenda-item p {
+            color: var(--text-light);
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .project-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(22, 93, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        }
+        
+        .project-date {
+            font-size: 0.9rem;
+            color: var(--primary-blue);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .project-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--blockchain-gray);
+        }
+        
+        .project-description {
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+        
+        .no-projects {
+            color: var(--text-light);
+            text-align: center;
+            padding: 30px 0;
+            background-color: white;
+            border-radius: 12px;
+            border: 1px dashed rgba(22, 93, 255, 0.2);
+        }
+        
+        /* 区块链技术应用区 */
+        .blockchain-section {
+            padding: 140px 0;
+            background-color: var(--blockchain-gray);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .blockchain-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="rgba(255,255,255,0.03)" d="M47.5,-65.9C61.6,-59.5,74.5,-49.9,81.4,-36.5C88.4,-23.1,89.3,-6.9,85.9,7.6C82.5,22.1,74.8,35.6,64.2,46.3C53.6,57,39.9,64.9,25.3,70.5C10.7,76.1,-5.1,79.4,-20.5,75.7C-35.9,72,-51,61.3,-61.6,47.9C-72.2,34.5,-78.2,18.3,-80.5,1.8C-82.8,-14.7,-81.5,-30.7,-72.3,-42.8C-63.1,-54.9,-46,-63.1,-30.1,-68.1C-14.2,-73.1,1.5,-74.9,16.1,-74.2C30.7,-73.5,44.3,-70.3,55.7,-62.2C67.1,-54.1,76.3,-41.1,81.1,-27.3C85.9,-13.5,86.3,1.1,83.2,14.9C80.1,28.7,73.5,41.7,63.2,51.1C52.9,60.5,38.9,66.3,24.1,69.9C9.3,73.5,-6.6,74.9,-21.9,72.6C-37.2,69.3,-51.8,63.2,-62.2,52.2C-72.6,41.2,-78.9,25.3,-81.8,9.1C-84.7,-7.1,-84.2,-23.7,-76.3,-36.8C-68.4,-49.9,-53.1,-59.5,-38.1,-66.2C-23.1,-72.9,-8.7,-76.7,4.7,-79.2C18.1,-81.7,36.1,-82.9,47.5,-65.9Z" transform="translate(100 100)" /></svg>') repeat;
+        }
+        
+        .blockchain-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .blockchain-content h3 {
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .blockchain-content h3::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), white);
+            border-radius: 2px;
+        }
+        
+        .blockchain-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .blockchain-feature {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 35px 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(22, 93, 255, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .blockchain-feature:hover {
+            background-color: rgba(22, 93, 255, 0.1);
+            transform: translateY(-8px);
+        }
+        
+        .blockchain-feature h4 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: white;
+        }
+        
+        .blockchain-feature p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+        }
+        
+        /* 评价 */
+        .testimonials {
+            padding: 140px 0;
+            background-color: white;
+        }
+        
+        .testimonials-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .testimonial {
+            text-align: center;
+            padding: 60px;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(22, 93, 255, 0.1);
+            position: relative;
+        }
+        
+        .testimonial::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 80px;
+            color: var(--light-blue);
+            font-family: Georgia, serif;
+            opacity: 0.5;
+        }
+        
+        .testimonial-text {
+            font-size: 1.3rem;
+            font-style: italic;
+            margin-bottom: 40px;
+            color: var(--text-dark);
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-author {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--blockchain-gray);
+        }
+        
+        .testimonial-role {
+            color: var(--primary-blue);
+            font-size: 0.95rem;
+            margin-top: 5px;
+        }
+        
+        /* 联系我们 */
+        .contact {
+            padding: 140px 0;
+            background-color: var(--light-blue);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <div class="logo-icon"></div>
+                    世界和平基金会
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#about">关于我们</a></li>
+                    <li><a href="#values">核心价值</a></li>
+                    <li><a href="#agenda">仁义议程</a></li>
+                    <li><a href="#blockchain">区块链技术</a></li>
+                    <li><a href="#testimonials">社会评价</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+                </ul>
+                <div class="mobile-menu-btn">☰</div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Banner轮播 -->
+    <section class="banner">
+        <div class="slides">
+            <div class="slide">
+                <div class="slide-img">
+                    <img src="peace-banner.jpg" alt="世界和平愿景">
+                </div>
+                <h1>区块链赋能世界和平</h1>
+                <p>利用区块链技术的透明性与去中心化特性，构建全球和平促进网络，让每一份善意都能被精准传递</p>
+            </div>
+        </div>
+        <div class="slide-controls">
+            <div class="slide-dot active"></div>
+            <div class="slide-dot"></div>
+            <div class="slide-dot"></div>
+        </div>
+    </section>
+
+    <!-- 关于我们 -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title">关于我们</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>世界和平基金会的使命</h3>
+                    <p>世界和平基金会是一个致力于通过创新技术促进全球和平与人道主义援助的国际组织。我们相信，区块链技术的透明性、可追溯性和去中心化特性，能够为慈善事业带来革命性的变革。</p>
+                    <p>我们的团队由来自全球各地的和平倡导者、技术专家和人道主义工作者组成，共同致力于构建一个更加公平、透明、高效的国际援助体系。</p>
+                    <div>
+                        <span class="blockchain-tag">区块链透明捐赠</span>
+                        <span class="blockchain-tag">人道主义援助</span>
+                        <span class="blockchain-tag">国际合作</span>
+                        <span class="blockchain-tag">和平建设</span>
+                    </div>
+                </div>
+                <div class="about-img">
+                    <img src="CZZ.jpeg" alt="世界和阿斯顿撒大师打队">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心价值 -->
+    <section class="values" id="values">
+        <div class="container">
+            <h2 class="section-title">核心价值</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <h3>透明与诚信</h3>
+                    <p>利用区块链技术确保每一笔捐款的流向都可追溯，让捐赠者清晰了解资金的使用情况，建立完全透明的慈善生态系统。</p>
+                </div>
+                <div class="value-card">
+                    <h3>公正与平等</h3>
+                    <p>无论种族、宗教、国籍，我们致力于为所有受冲突影响的人们提供平等的援助机会，促进全球社会的公正与和谐。</p>
+                </div>
+                <div class="value-card">
+                    <h3>合作与包容</h3>
+                    <p>与各国政府、国际组织、民间社会和当地社区建立合作伙伴关系，通过多方协作实现更有效的和平建设与人道主义援助。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 仁义议程模块 -->
+    <section class="charity-agenda" id="agenda">
+        <div class="container">
+            <h2 class="section-title">世界和平基金会仁义议程</h2>
+            <div class="agenda-content">
+                <!-- 左边：项目介绍 -->
+                <div class="agenda-item">
+                    <h3>项目介绍</h3>
+                    <p>世界和平基金会作为一个线上社区组织，以"追求全球和平与和谐"为核心信念，初始启动资金为100美元。当世界动荡地区发生不安事件时，由理事会(3-5名社区选举成员)快速响应，发起为期三天的捐款行动。</p>
+                    <p>当前首次募捐行动聚焦乌克兰地区，旨在为当地儿童提供略微的帮助与支持。社区成员通过Discord或Telegram等平台捐款至理事会持有的MultiSig钱包，本次筹款目标为100美金和相应世界和平币。</p>
+                    <p>行动结束后，资金池90%立即兑换为USDT，通过官方渠道(如联合国儿童基金会或红十字会)透明捐出，支持人道救援；剩余10%用于下次行动种子基金。</p>
+                    <p>同时资金池中的世界和平币以市场价折价3%开放给捐款者限时购买，激发参与热情，而总池的1%作为理事会运营报酬(上限每年1万美元)。</p>
+                </div>
+                
+                <!-- 中间：当前项目 -->
+                <div class="agenda-item">
+                    <h3>当前募捐项目</h3>
+                    <div class="project-card">
+                        <div class="project-date">进行中 · 剩余2天</div>
+                        <div class="project-title">乌克兰儿童援助计划</div>
+                        <div class="project-description">
+                            为乌克兰受冲突影响地区的儿童提供紧急人道主义援助，包括食品、医疗用品、教育资源等基本需求支持。我们将与当地人道主义组织合作，确保援助物资能够精准送达最需要的儿童手中。
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-date">目标进度</div>
+                        <div class="project-description">
+                            已筹： 666世界和平币<br>
+                            目标：100美元等值的货币<br>
+                            捐赠人数：3人
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 右边：历史项目 -->
+                <div class="agenda-item">
+                    <h3>历史项目</h3>
+                    <div class="no-projects">
+                        暂无历史项目记录<br>
+                        这是我们的首次人道主义援助行动
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 区块链技术应用 -->
+    <section class="blockchain-section" id="blockchain">
+        <div class="container">
+            <div class="blockchain-content">
+                <h2 class="section-title" style="color:white">区块链技术应用</h2>
+                <h3>透明化的和平建设机制</h3>
+                <p>我们利用区块链技术构建透明、安全、高效的捐赠和援助分配系统，确保每一笔善款都能被有效利用。</p>
+                
+                <div class="blockchain-features">
+                    <div class="blockchain-feature">
+                        <h4>透明捐赠追踪</h4>
+                        <p>所有捐赠记录上链存储，不可篡改，捐赠者可随时查询资金流向和使用情况。</p>
+                    </div>
+                    <div class="blockchain-feature">
+                        <h4>智能合约自动执行</h4>
+                        <p>预设援助分配规则，通过智能合约自动执行，减少人为干预，提高援助效率。</p>
+                    </div>
+                    <div class="blockchain-feature">
+                        <h4>去中心化治理</h4>
+                        <p>社区成员通过区块链进行投票，参与援助项目决策，实现更加民主的公益治理。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 社会评价 -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">社会评价</h2>
+            <div class="testimonials-container">
+                <div class="testimonial">
+                    <p class="testimonial-text">世界和平基金会利用区块链技术带来的透明性，为国际人道主义援助树立了新的标准。他们的工作让每一份善意都能被精准传递，这是科技向善的典范。</p>
+                    <div class="testimonial-author">张明</div>
+                    <div class="testimonial-role">国际人道主义法专家</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">联系我们</h2>
+            <!-- 联系表单内容 -->
+        </div>
+    </section>
+</body>
+</html>

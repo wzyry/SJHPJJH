@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>如何在HTML文件中查找图片</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        code {
+            background: #f5f5f5;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        pre {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        .example {
+            background: #e8f4f8;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>如何在HTML文件中查找图片</h1>
+    
+    <p>在HTML文件中，图片通常通过以下几种方式引用：</p>
+    
+    <h2>1. 直接在HTML中通过&lt;img&gt;标签引用</h2>
+    <div class="example">
+        <pre><code>&lt;img src="images/logo.png" alt="网站logo"&gt;</code></pre>
+    </div>
+    <p>这种情况下，图片路径通常是相对于HTML文件的位置。</p>
+    
+    <h2>2. 在CSS中通过background-image引用</h2>
+    <div class="example">
+        <pre><code>div.header {
+    background-image: url('images/bg.jpg');
+}</code></pre>
+    </div>
+    
+    <h2>3. 其他图片相关元素</h2>
+    <ul>
+        <li>网站图标：<code>&lt;link rel="icon" href="favicon.ico"&gt;</code></li>
+        <li>Apple Touch Icon：<code>&lt;link rel="apple-touch-icon" href="apple-icon.png"&gt;</code></li>
+        <li>图片按钮：<code>&lt;input type="image" src="images/button.png"&gt;</code></li>
+    </ul>
+    
+    <h2>查找步骤</h2>
+    <ol>
+        <li>打开HTML文件，使用文本编辑器搜索关键词：<code>&lt;img</code>、<code>background-image</code>、<code>url(</code>、<code>href="</code></li>
+        <li>查看搜索结果中的图片路径</li>
+        <li>根据路径找到对应的图片文件</li>
+    </ol>
+    
+    <h2>常见图片路径类型</h2>
+    <ul>
+        <li>相对路径：<code>images/logo.png</code>（相对于HTML文件）</li>
+        <li>绝对路径：<code>/images/logo.png</code>（相对于网站根目录）</li>
+        <li>完整URL：<code>https://example.com/images/logo.png</code></li>
+    </ul>
+    
+    <p>注意：如果你需要我帮助分析HTML文件中的图片，需要将文件移动到当前工作目录：<strong>C:\Users\Administrator\Documents\trae_projects\xuexi111</strong></p>
+</body>
+</html>
